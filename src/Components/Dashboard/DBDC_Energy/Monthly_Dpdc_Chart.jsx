@@ -5,7 +5,7 @@ import { AuthContext } from '../../Logout/Provider/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { FaCircle } from "react-icons/fa";
-import { MdOutlineBarChart } from "react-icons/md";
+
 
 const Monthly_Dpdc_Chart = () => {
     const { logout } = useContext(AuthContext);
@@ -84,11 +84,10 @@ const Monthly_Dpdc_Chart = () => {
     return (
         <div className=' shadow-xl h-[460px] mt-4'>
             <div className='text-center mb-2'>
-                <h2 className='font-bold '>This Month DPDC Energy</h2>
-                <p className='flex items-center justify-center'><MdOutlineBarChart /> DPDC Energy(kWh)</p>
+                <h2 className='font-bold text-black'>This Month DPDC Energy</h2>
             </div>
             <BarChart
-                width={770} // Increase width to accommodate all ticks
+                width={750} // Increase width to accommodate all ticks
                 height={400}
                 data={data}
                 margin={{

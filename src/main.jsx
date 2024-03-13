@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         element:<ForgetPassword></ForgetPassword>
       },
       {
-        path:'/dbdcEnergy',
+        path:'/dpdcEnergy',
         element:<Dbdc_Energy></Dbdc_Energy>
       },
       {

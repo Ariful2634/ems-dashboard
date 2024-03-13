@@ -5,7 +5,7 @@ import { AuthContext } from '../../Logout/Provider/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { FaCircle } from "react-icons/fa";
-import { MdOutlineBarChart } from "react-icons/md";
+
 
 const Yearly_Dpdc_Chart = () => {
     const { logout } = useContext(AuthContext);
@@ -42,7 +42,7 @@ const Yearly_Dpdc_Chart = () => {
     const data = months.map((month, index) => {
         const matchingEntry = yearData.find(entry => new Date(entry.date).getMonth() === index);
         
-        console.log(matchingEntry)
+        // console.log(matchingEntry)
         
         
         return {
@@ -69,8 +69,7 @@ const Yearly_Dpdc_Chart = () => {
     return (
         <div className=' shadow-xl h-[460px] mt-4'>
             <div className='text-center mb-2'>
-                <h2 className='font-bold '>This Year DPDC Energy</h2>
-                <p className='flex items-center justify-center'><MdOutlineBarChart /> DPDC Energy(kWh)</p>
+                <h2 className='font-bold text-black'>This Year DPDC Energy</h2>
             </div>
             <BarChart
                 width={750} // Increase width to accommodate all ticks

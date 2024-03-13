@@ -40,7 +40,7 @@ const Dashboard = () => {
                 <div className={`drawer ${isSidebarOpen ? 'lg:drawer-open' : ''} mx-auto h-full  w-full rounded-2xl`}>
                     <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                     {/* page content */}
-                    <div className="drawer-content bg-[#2e5a88] text-white flex flex-col  -lg:pt-10 lg:pl-10">
+                    <div className="drawer-content bg-white text-black flex flex-col  -lg:pt-10 lg:pl-10">
                         <div className="sticky top-0 ">
                             <div className="flex lg:hidden justify-between items-center text-black absolute -top-[56px] px-4 py-2">
                                 <label
@@ -187,7 +187,7 @@ const Dashboard = () => {
                                                             ? "flex px-2 gap-3 items-center bg-[#2e5a88] text-white p-2 rounded-xl pr-4"
                                                             : "flex px-2 gap-3 items-center "
                                                     }
-                                                    to="/dbdcEnergy"
+                                                    to="/dpdcEnergy"
                                                 >
                                                     <GiRadioTower className="text-2xl" />
                                                     DPDC Energy
