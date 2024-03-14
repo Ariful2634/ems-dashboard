@@ -52,7 +52,7 @@ const Dashboard = () => {
                             </div>
                             <div className="hidden lg:flex items-center justify-center h-full  -top-[65px] relative -left-[890px] mt-3">
                                 <button onClick={toggleSidebar}>
-                                    {isSidebarOpen ? <AiOutlineClose className="text-2xl" /> : <AiOutlineMenu className="text-2xl  left-[65px] fixed" />}
+                                    {isSidebarOpen ? <AiOutlineClose className="text-2xl text-white" /> : <AiOutlineMenu className="text-2xl text-white left-[65px] fixed" />}
                                 </button>
                             </div>
                         </div>

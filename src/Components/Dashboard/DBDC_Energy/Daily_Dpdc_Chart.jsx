@@ -38,12 +38,16 @@ const Daily_Dpdc_Chart = () => {
     const currentDate = new Date();
     const currentDay = currentDate.getDate(); // Get the current day of the month
 
+    // Calculate the time to start the chart (6 hours ago)
+    const startTime = new Date(currentDate.getTime() - (3 * 60 * 60 * 1000));
+    startTime.setMinutes(0); // Set minutes to 0 to align with the hour
+
     // Create labels for each hour with minute intervals (e.g., 0:00, 0:01, 0:02, ..., 23:59)
-    const hourLabels = Array.from({ length: 24 }, (_, hour) => {
-        return Array.from({ length: 60 }, (_, minute) => {
-            return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-        });
-    }).flat();
+    const hourLabels = Array.from({ length: 24 * 60 }, (_, i) => {
+        const hour = Math.floor(i / 60);
+        const minute = i % 60;
+        return `${(hour).toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+    });
 
     // Filter out entries that are not from the current day
     const filteredData = dailyData['DPDC Today DATA'].filter(entry => {
@@ -53,9 +57,8 @@ const Daily_Dpdc_Chart = () => {
 
     // Map over each minute and get the corresponding dpdcPower value
     const data = hourLabels.map((hourLabel, index) => {
-        // Calculate the time for the current index by subtracting 6 hours and 40 minutes
-        const currentTime = new Date(currentDate.getTime() - (10 * 60 * 60 * 1000) - (26 * 60 * 1000));
-        currentTime.setMinutes(currentTime.getMinutes() + index); // Add the index as minutes
+        // Calculate the time for the current index
+        const currentTime = new Date(startTime.getTime() + (index * 60 * 1000));
 
         // Find the dpdcPower value for the current time
         const matchingMinuteData = filteredData.find(entry => {
@@ -91,24 +94,23 @@ const Daily_Dpdc_Chart = () => {
         return null;
     };
 
-
     return (
-        <div className='shadow-xl'>
+        <div className='shadow-xl mb-4'>
             <div>
                 <h2 className='text-center mb-2 text-black font-bold'>DPDC Energy</h2>
             </div>
             <LineChart
-            width={1000}
-            height={400}
-            data={data}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-            <CartesianGrid stroke="#E5E4E2" />
-            <XAxis dataKey="time" interval={59} tick={{ fontSize: 10, fill: 'black' }} />
-            <YAxis domain={yAxisDomain} />
-            <Tooltip content={<CustomTooltip />} />
-            <Line type="line" dataKey="dpdcPower" stroke="#8884d8" dot={false} />
-        </LineChart>
+                width={1000}
+                height={400}
+                data={data}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+                <CartesianGrid stroke="#E5E4E2" />
+                <XAxis dataKey="time" interval={59} tick={{ fontSize: 10, fill: 'black' }} />
+                <YAxis domain={yAxisDomain} />
+                <Tooltip content={<CustomTooltip />} />
+                <Line type="line" dataKey="dpdcPower" stroke="#8884d8" dot={false} />
+            </LineChart>
         </div>
     );
 };
