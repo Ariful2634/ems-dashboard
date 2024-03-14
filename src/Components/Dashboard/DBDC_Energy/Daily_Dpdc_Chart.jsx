@@ -9,10 +9,18 @@ import { FaCircle } from "react-icons/fa";
 const Daily_Dpdc_Chart = () => {
     const { logout } = useContext(AuthContext);
     const [token, setToken] = useState(null);
+    const [startTime, setStartTime] = useState(null); // State to store the start time
 
     useEffect(() => {
         setToken(logout);
     }, [logout]);
+
+    useEffect(() => {
+        // Calculate the start time (6 AM) whenever the component is rendered
+        const currentDate = new Date();
+        const newStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 6);
+        setStartTime(newStartTime);
+    }, [token]); // Re-calculate startTime whenever the token changes
 
     const fetchData = async () => {
         try {
@@ -34,14 +42,6 @@ const Daily_Dpdc_Chart = () => {
         refetchOnWindowFocus: false
     });
 
-    // Get the current date and time
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate(); // Get the current day of the month
-
-    // Calculate the time to start the chart (6 hours ago)
-    const startTime = new Date(currentDate.getTime() - (3 * 60 * 60 * 1000));
-    startTime.setMinutes(0); // Set minutes to 0 to align with the hour
-
     // Create labels for each hour with minute intervals (e.g., 0:00, 0:01, 0:02, ..., 23:59)
     const hourLabels = Array.from({ length: 24 * 60 }, (_, i) => {
         const hour = Math.floor(i / 60);
@@ -50,6 +50,8 @@ const Daily_Dpdc_Chart = () => {
     });
 
     // Filter out entries that are not from the current day
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate(); // Get the current day of the month
     const filteredData = dailyData['DPDC Today DATA'].filter(entry => {
         const entryTime = new Date(entry.timedate);
         return entryTime.getDate() === currentDay; // Check if the entry is from the current day
@@ -57,6 +59,9 @@ const Daily_Dpdc_Chart = () => {
 
     // Map over each minute and get the corresponding dpdcPower value
     const data = hourLabels.map((hourLabel, index) => {
+        // Ensure startTime is valid before proceeding
+        if (!startTime) return null;
+
         // Calculate the time for the current index
         const currentTime = new Date(startTime.getTime() + (index * 60 * 1000));
 
@@ -74,10 +79,10 @@ const Daily_Dpdc_Chart = () => {
     });
 
     // Calculate the maximum value of dpdcPower for setting Y-axis domain
-    const maxDpdcPower = Math.max(...data.map(entry => entry.dpdcPower || 0));
+    const maxDpdcPower = Math.max(...data.map(entry => entry?.dpdcPower || 0));
     const yAxisDomain = [0, Math.ceil(maxDpdcPower / 10) * 10];
 
-    //  Custom content for the tooltip
+    // Custom content for the tooltip
     const CustomTooltip = ({ active, payload }) => {
         if (active && payload && payload.length) {
             const time = payload[0].payload.time; // Get the time from payload
@@ -95,12 +100,12 @@ const Daily_Dpdc_Chart = () => {
     };
 
     return (
-        <div className='shadow-xl mb-4'>
+        <div className='shadow-xl mb-5 rounded'>
             <div>
                 <h2 className='text-center mb-2 text-black font-bold'>DPDC Energy</h2>
             </div>
             <LineChart
-                width={1000}
+                width={1100}
                 height={400}
                 data={data}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
