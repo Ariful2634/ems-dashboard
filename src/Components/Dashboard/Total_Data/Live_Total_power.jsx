@@ -3,7 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import { RiArrowUpDownLine } from "react-icons/ri";
 import { FaArrowUp } from "react-icons/fa6";
-import { AuthContext } from "../Logout/Provider/AuthProvider";
+import { AuthContext } from "../../Logout/Provider/AuthProvider";
 import axios from "axios";
 
 const Live_Total_power = () => {
@@ -44,10 +44,6 @@ const Live_Total_power = () => {
         }
     };
 
-    console.log(generator)
-
-
-    console.log(dpdc)
 
     useEffect(() => {
         if (token) {

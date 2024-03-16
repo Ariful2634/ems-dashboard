@@ -26,7 +26,7 @@ import MakeAdmin from './Components/Dashboard/MakeAdmin';
 import ForgetPassword from './Components/Login/ForgetPassword';
 import UpdateProfile from './Components/Dashboard/UpdateProfile';
 import Dbdc_Energy from './Components/Dashboard/DBDC_Energy/Dbdc_Energy';
-import Live_Total_power from './Components/Dashboard/Live_Total_power';
+import TotalData from './Components/Dashboard/Total_Data/TotalData';
 
 
 const queryClient = new QueryClient()
@@ -57,8 +57,8 @@ const router = createBrowserRouter([
         element:<Dbdc_Energy></Dbdc_Energy>
       },
       {
-        path:'/liveTotalPower',
-        element:<Live_Total_power></Live_Total_power>
+        path:'/totalData',
+        element:<TotalData></TotalData>
       },
       {
         path:'/dashboard',
