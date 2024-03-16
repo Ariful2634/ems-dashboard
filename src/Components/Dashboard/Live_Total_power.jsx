@@ -1,60 +1,153 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-loss-of-precision */
+import { useContext, useEffect, useState } from "react";
+import { RiArrowUpDownLine } from "react-icons/ri";
+import { FaArrowUp } from "react-icons/fa6";
+import { AuthContext } from "../Logout/Provider/AuthProvider";
+import axios from "axios";
+
 const Live_Total_power = () => {
+
+    const [sortAscending, setSortAscending] = useState(true);
+    const [sortBy, setSortBy] = useState("");
+
+    const { logout } = useContext(AuthContext);
+    const [token, setToken] = useState(null);
+    const [dpdc, setDpdc] = useState({})
+    const [generator, setGenerator] = useState({})
+
+
+    useEffect(() => {
+        setToken(logout);
+    }, [logout]);
+
+    const fetchDpdc = async () => {
+        try {
+            const headers = {
+                Authorization: `Token ${token}`
+            };
+            const res = await axios.get('https://scubetech.xyz/power-monitor/monitor-load-dpdc/', { headers });
+            setDpdc(res.data)
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    const fetchGenerator = async () => {
+        try {
+            const headers = {
+                Authorization: `Token ${token}`
+            };
+            const res = await axios.get('https://scubetech.xyz/power-monitor/monitor-load-generator/', { headers });
+            setGenerator(res.data)
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    console.log(generator)
+
+
+    console.log(dpdc)
+
+    useEffect(() => {
+        if (token) {
+            fetchDpdc();
+            fetchGenerator();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token]);
+
+
+    const data = [
+        {
+            name: 'DPDC', ...dpdc
+        },
+        {
+            name: 'Generator', ...generator
+        }
+    ]
+
+    console.log(data)
+
+    const toggleSort = (column) => {
+        if (sortBy === column) {
+            setSortAscending(!sortAscending);
+        } else {
+            setSortBy(column);
+            setSortAscending(true);
+        }
+    };
+
+    // Sorting the data based on column and order
+    const sortedData = [...data].sort((a, b) => {
+        if (sortBy === "name") {
+            return sortAscending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+        } else {
+            return sortAscending ? a[sortBy] - b[sortBy] : b[sortBy] - a[sortBy];
+        }
+    });
+
     return (
         <div className="bg-white min-h-screen text-black">
             <div>
                 <table>
-                    <thead className="border">
-                        <th rowSpan={2} className="border-r">Name</th>
-                        <th rowSpan={2} className="border-r">Live Power</th>
-                        <th rowSpan={2} className="border-r">Frequency</th>
+                    <thead onClick={() => toggleSort("name")} className="border bg-blue-200 ">
+                        <th rowSpan={2} className="border-r px-2 w-[120px] "><span className="flex justify-center items-center gap-3">Name {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                        <th rowSpan={2} className="border-r px-2 w-[120px] "><span className="flex justify-center items-center gap-1">Live Power {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                        <th rowSpan={2} className="border-r px-2 w-[120px] "><span className="flex justify-center items-center gap-3">Frequency {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
                         <th className="border-r">
-                            <th colSpan={3} className=" border-b ">Live Voltage</th>
-                            <tr className="">
-                                <th className="border-r font-normal w-[50px]">Line 1</th>
-                                <th className="border-r font-normal w-[50px]">Line 2</th>
-                                <th className=" w-[50px] font-normal ">Line 3</th>
-                            </tr> 
+                            <th colSpan={3} className=" border-b w-[270px]">Live Voltage</th>
+                            <tr className="px-2">
+                                <th className="border-r  "><span className="flex justify-center items-center gap-3">Line 1 {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                                <th className="border-r  "><span className="flex justify-center items-center gap-3">Line 2 {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                                <th className="   "><span className="flex justify-center items-center gap-3">Line 3 {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                            </tr>
                         </th>
-                        
+
                         <th className="border-r">
-                            <th colSpan={3} className=" border-b ">Live Current</th>
-                            <tr className="">
-                                <th className="border-r font-normal w-[50px]">Line 1</th>
-                                <th className="border-r font-normal w-[50px]">Line 2</th>
-                                <th className=" w-[50px] font-normal">Line 3</th>
-                            </tr> 
+                            <th colSpan={3} className=" border-b w-[270px]">Live Current </th>
+                            <tr className="px-2 ">
+                                <th className="border-r  w-[90px] "><span className="flex justify-center items-center gap-3">Line 1 {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                                <th className="border-r  w-[90px] "><span className="flex justify-center items-center gap-3">Line 2 {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                                <th className="   w-[90px]"><span className="flex justify-center items-center gap-3">Line 3 {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                            </tr>
                         </th>
                         <th className="border-r">
-                            <th colSpan={2} className=" border-b ">Harmonics</th>
-                            <tr className="">
-                                <th className="border-r font-normal w-[50px]">Voltage</th>
-                                <th className=" font-normal w-[50px]">Current</th>
-                                
-                            </tr> 
+                            <th colSpan={2} className=" border-b  w-[270px]">Harmonics</th>
+                            <tr className="px-2">
+                                <th className="border-r  px-2"><span className="flex justify-center items-center gap-3">Voltage {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+                                <th className="  px-2"><span className="flex justify-center items-center gap-3">Current {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
+
+                            </tr>
                         </th>
-                        <th rowSpan={2} className="border-r">Today En...</th>
+                        <th rowSpan={2} className="border-r px-2 w-[120px]"><span className="flex justify-center items-center gap-1">Today En... {sortAscending ? <RiArrowUpDownLine /> : <FaArrowUp className="text-xs" />}</span></th>
                     </thead>
-                    <tbody>
-                        <tr className="border">
-                            <td className="border-r" >Demo 1</td>
-                            <td className="border-r">456</td>
-                            <td className="border-r">456</td>
-                            <td className="w-[150px] border-r">
-                                <td className="border-r w-[50px]">000</td>
-                                <td className="border-r w-[50px]">$500</td>
-                                <td className=" w-[50px]">$500</td>
-                            </td>
-                            <td className="w-[150px] border-r">
-                                <td className="border-r w-[50px]">000</td>
-                                <td className="border-r w-[50px]">$500</td>
-                                <td className=" w-[50px] ">$500</td>
-                            </td>
-                            <td className="border-r w-[100px]">
-                                <td className="border-r  w-[56px]">000</td>
-                                <td className=" w-[55px]">$500</td>  
-                            </td>
-                            <td className="border-r">456</td> 
-                        </tr>
+                    <tbody className="">
+                        {
+                            sortedData.map(tdata => (<tr key={tdata.id} className="border">
+                                <td className="border-r text-center" >{tdata.name}</td>
+                                <td className="border-r text-center">{tdata.live_power?.toFixed(2)} kW</td>
+                                <td className="border-r text-center flex justify-center gap-1">
+                                    {tdata.live_frequency && <p>{ tdata.live_frequency?.toFixed(2) } </p> || tdata.live_power_factor && 
+                                    <p>{tdata.live_power_factor?.toFixed(2)} </p>} Hz
+                                </td>
+                                <td className=" border-r w-[270px]">
+                                    <td className="border-r w-[90px] text-center">{tdata.live_voltage_l1?.toFixed(2)} V</td>
+                                    <td className="border-r w-[90px] text-center">{tdata.live_voltage_l2?.toFixed(2)} V</td>
+                                    <td className="w-[90px] text-center">{tdata.live_voltage_l3?.toFixed(2)} V</td>
+                                </td>
+                                <td className=" border-r w-[270px]">
+                                    <td className="border-r w-[90px] text-center">{tdata.live_current_l1?.toFixed(2)} A</td>
+                                    <td className="border-r w-[90px] text-center">{tdata.live_current_l2?.toFixed(2)} A</td>
+                                    <td className="w-[90px] text-center">{tdata.live_current_l3?.toFixed(2)} A</td>
+                                </td>
+                                <td className="border-r w-[270px]">
+                                    <td className="border-r w-[136px] text-center">{tdata.average_voltage_harmonics?.toFixed(2)} THD</td>
+                                    <td className="w-[134px]  text-center">{tdata.average_current_harmonics?.toFixed(2)} THD</td>
+                                </td>
+                                <td className="border-r text-center">{tdata.todays_energy?.toFixed(2)} kWh</td>
+                            </tr>))
+                        }
                     </tbody>
                 </table>
             </div>

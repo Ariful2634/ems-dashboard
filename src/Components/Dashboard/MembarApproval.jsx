@@ -79,14 +79,14 @@ const MembarApproval = () => {
                 <h2 className="text-center mb-8 text-2xl">Member Approval</h2>
                 <div>
                     <div className="overflow-x-auto">
-                        <table className="table">
+                        <table className="table ">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Action</th>
+                                    <th className="text-black">#</th>
+                                    <th className="text-black">Id</th>
+                                    <th className="text-black">Name</th>
+                                    <th className="text-black">Role</th>
+                                    <th className="text-black">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

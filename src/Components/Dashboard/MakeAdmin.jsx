@@ -106,12 +106,12 @@ const MakeAdmin = () => {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Action</th>
+                                <th className="text-black">#</th>
+                                <th className="text-black">Id</th>
+                                <th className="text-black">Name</th>
+                                <th className="text-black">Email</th>
+                                <th className="text-black">Role</th>
+                                <th className="text-black">Action</th>
                             </tr>
                         </thead>
                         <tbody>
