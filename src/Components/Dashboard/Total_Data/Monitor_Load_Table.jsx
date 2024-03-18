@@ -6,7 +6,7 @@ import { FaArrowUp } from "react-icons/fa6";
 import { AuthContext } from "../../Logout/Provider/AuthProvider";
 import axios from "axios";
 
-const Live_Total_power = () => {
+const Monitor_Load_Table = () => {
 
     const [sortAscending, setSortAscending] = useState(true);
     const [sortBy, setSortBy] = useState("");
@@ -21,23 +21,23 @@ const Live_Total_power = () => {
         setToken(logout);
     }, [logout]);
 
-    const fetchDpdc = async () => {
+    const fetchLoadLight = async () => {
         try {
             const headers = {
                 Authorization: `Token ${token}`
             };
-            const res = await axios.get('https://scubetech.xyz/power-monitor/monitor-load-dpdc/', { headers });
+            const res = await axios.get('https://scubetech.xyz/power-monitor/monitor-load-light/', { headers });
             setDpdc(res.data)
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
-    const fetchGenerator = async () => {
+    const fetchLoadHeavy = async () => {
         try {
             const headers = {
                 Authorization: `Token ${token}`
             };
-            const res = await axios.get('https://scubetech.xyz/power-monitor/monitor-load-generator/', { headers });
+            const res = await axios.get('https://scubetech.xyz/power-monitor/monitor-load-heavy/', { headers });
             setGenerator(res.data)
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -49,8 +49,8 @@ const Live_Total_power = () => {
 
     useEffect(() => {
         if (token) {
-            fetchDpdc();
-            fetchGenerator();
+            fetchLoadLight();
+            fetchLoadHeavy();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
@@ -126,8 +126,8 @@ const Live_Total_power = () => {
                                 <td className="border-r text-center" >{tdata.name}</td>
                                 <td className="border-r text-center">{tdata.live_power?.toFixed(2)} kW</td>
                                 <td className="border-r text-center flex justify-center gap-1">
-                                    {tdata.live_frequency && <p>{ tdata.live_frequency?.toFixed(2) } </p> || tdata.live_power_factor && 
-                                    <p>{tdata.live_power_factor?.toFixed(2)} </p>} Hz
+                                    {tdata.live_frequency && <p>{tdata.live_frequency?.toFixed(2)} </p> || tdata.live_power_factor &&
+                                        <p>{tdata.live_power_factor?.toFixed(2)} </p>} Hz
                                 </td>
                                 <td className=" border-r w-[270px]">
                                     <td className="border-r w-[90px] text-center">{tdata.live_voltage_l1?.toFixed(2)} V</td>
@@ -153,4 +153,4 @@ const Live_Total_power = () => {
     );
 };
 
-export default Live_Total_power;
+export default Monitor_Load_Table;

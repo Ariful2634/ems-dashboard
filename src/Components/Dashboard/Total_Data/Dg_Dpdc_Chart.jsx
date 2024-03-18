@@ -23,6 +23,8 @@ const Dg_Dpdc_Chart = () => {
             }
         };
 
+        
+
         if (token) {
             fetchDpdcChart();
         }
@@ -33,8 +35,6 @@ const Dg_Dpdc_Chart = () => {
         { name: 'DG', value: dpdcChart.Percentage_Generator, color: '#ff0000' },
     ];
 
-    // const RADIAN = Math.PI / 180;
-
     // Function to render customized label with inline styles
     const renderCustomizedLabel = ({ cx, cy, innerRadius, outerRadius, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.3;
@@ -42,36 +42,37 @@ const Dg_Dpdc_Chart = () => {
 
         if (data[index].name === 'DPDC') {
             x = cx;
-            y = cy - radius;
+            y = cy - radius; // Show DPDC label at the top
         } else {
             x = cx;
-            y = cy + radius;
+            y = cy + radius; // Show DG label at the bottom
         }
 
         const labelStyle = {
             fill: '#fff',
             textAnchor: 'middle',
-            dominantBaseline: 'central'
+            dominantBaseline: 'central',
+            fontSize: '13px', // Adjust the font size as needed
         };
 
         return (
             <text x={x} y={y} style={labelStyle}>
-                {`${data[index].name}: ${data[index].value} %`}
+                {`${data[index].name}: ${data[index].value}%`}
             </text>
         );
     };
 
     return (
-        <div>
-            <div>
-                <PieChart width={400} height={200}>
+        <div >
+            <div >
+                <PieChart width={200} height={200} >
                     <Pie
                         dataKey="value"
                         isAnimationActive={false}
                         data={data}
                         cx="50%"
                         cy="50%"
-                        outerRadius={80}
+                        outerRadius={70}
                         fill="#8884d8"
                         label={renderCustomizedLabel}
                         labelLine={false}
