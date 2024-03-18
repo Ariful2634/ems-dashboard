@@ -10,7 +10,6 @@ import Root from './Components/Root/Root';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Home from './Components/Home/Home';
 import KnowledgeBase from './Components/Dashboard/KnowledgeBase';
-import Demo2 from './Components/Dashboard/Demo2';
 import Demo3 from './Components/Dashboard/Demo3';
 import Demo4 from './Components/Dashboard/Demo4';
 import AuthProvider from './Components/Logout/Provider/AuthProvider';
@@ -27,6 +26,7 @@ import ForgetPassword from './Components/Login/ForgetPassword';
 import UpdateProfile from './Components/Dashboard/UpdateProfile';
 import Dbdc_Energy from './Components/Dashboard/DBDC_Energy/Dbdc_Energy';
 import TotalData from './Components/Dashboard/Total_Data/TotalData';
+import Analysis_Pro from './Components/Dashboard/Analysis_Pro/Analysis_Pro';
 
 
 const queryClient = new QueryClient()
@@ -61,16 +61,16 @@ const router = createBrowserRouter([
         element:<TotalData></TotalData>
       },
       {
+        path:'/analysisPro',
+        element:<Analysis_Pro></Analysis_Pro>
+      },
+      {
         path:'/dashboard',
         element:<Dashboard></Dashboard>,
         children:[
           {
             path:'knowledgeBase',
             element:<KnowledgeBase></KnowledgeBase>
-          },
-          {
-            path:'demo2',
-            element:<Demo2></Demo2>
           },
           {
             path:'demo3',
