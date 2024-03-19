@@ -269,10 +269,10 @@ const SelectedDateData = () => {
             afterDatasetsDraw(chart, args, plugins) {
                 const { ctx, tooltip, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
 
-                if (tooltip._active.length > 0) {
+                if (tooltip && tooltip._active && tooltip._active.length > 0) { // Check if tooltip and tooltip._active exist
                     const xCoor = x.getPixelForValue(tooltip.dataPoints[0].dataIndex);
                     const yCoor = y.getPixelForValue(tooltip.dataPoints[0].parsed.y);
-
+        
                     ctx.save();
                     ctx.beginPath();
                     ctx.lineWidth = 1;
@@ -281,7 +281,8 @@ const SelectedDateData = () => {
                     ctx.lineTo(xCoor, bottom);
                     ctx.stroke();
                     ctx.closePath();
-                }
+            }
+
             }
         };
 
