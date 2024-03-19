@@ -1,12 +1,12 @@
 
 // import Checkbox from './Checkbox';
-import Checkbox from './Checkbox';
+import SelectedDateData from './SelectedDateData';
 
 
 const Analysis_Pro = () => {
     return (
         <div>
-          <Checkbox></Checkbox>
+          <SelectedDateData/>
         </div>
     );
 };

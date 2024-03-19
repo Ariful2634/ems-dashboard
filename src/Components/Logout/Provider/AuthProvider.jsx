@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
     }, []); 
 
     const updateToken = (newToken) => {
-        const expires = new Date(Date.now() + 60 * 60 * 1000).toUTCString();
+        const expires = new Date(Date.now() + 8 * 60 * 60 * 1000).toUTCString();
         document.cookie = `token=${newToken}; expires=${expires}; path=/`;
         setLogout(newToken);
     };
