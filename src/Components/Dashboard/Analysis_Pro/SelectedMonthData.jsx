@@ -46,6 +46,7 @@ function SelectedMonthData() {
 
     // Cost
     const [dpdcCostChecked, setDpdcCostChecked] = useState(true);
+    const [generatorCostChecked, setGeneratorCostChecked] = useState(true);
 
 
 
@@ -126,7 +127,7 @@ function SelectedMonthData() {
 
                 if (generatorPowerChecked) {
                     newChartData.datasets.push({
-                        label: "Generatoe Energy",
+                        label: "Generator Energy",
                         data: labels.map(day => {
                             const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
                             return dataPoint ? dataPoint.heavy_energy: 0;
@@ -146,6 +147,17 @@ function SelectedMonthData() {
                         data: labels.map(day => {
                             const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
                             return dataPoint ? dataPoint.dpdc_cost : 0;
+                        }),
+                        backgroundColor: "rgba(255, 159, 64, 0.8)",
+                        yAxisID: "costAxis",
+                    });
+                }
+                if (generatorCostChecked && generatorPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Generator Cost",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.heavy_cost : 0;
                         }),
                         backgroundColor: "rgba(255, 159, 64, 0.8)",
                         yAxisID: "costAxis",
@@ -217,6 +229,7 @@ function SelectedMonthData() {
                     case "Generator Fuel":
                         return "L";
                     case "DPDC Cost":
+                    case "Generator Cost":
                         return "৳";
                     default:
                         return "";
@@ -233,7 +246,8 @@ function SelectedMonthData() {
         selectedButtons,
         dpdcPowerChecked,
         dpdcCostChecked,
-        generatorPowerChecked
+        generatorPowerChecked,
+        generatorCostChecked
 
     ]);
 
@@ -257,10 +271,12 @@ function SelectedMonthData() {
             setDpdcPowerChecked(true);
             setDpdcCostChecked(true);
             setGeneratorPowerChecked(true)
+            setGeneratorCostChecked(true)
         } else {
             setDpdcPowerChecked(false);
             setDpdcCostChecked(false);
             setGeneratorPowerChecked(false);
+            setGeneratorCostChecked(false)
         }
     };
 
