@@ -43,11 +43,15 @@ function SelectedMonthData() {
     // Power
     const [dpdcPowerChecked, setDpdcPowerChecked] = useState(true);
     const [generatorPowerChecked, setGeneratorPowerChecked] = useState(true);
+    const [coolingPowerChecked, setCoolingPowerChecked] = useState(true);
+    const [criticalPowerChecked, setCriticalPowerChecked] = useState(true);
 
     // Cost
     const [dpdcCostChecked, setDpdcCostChecked] = useState(true);
     const [generatorCostChecked, setGeneratorCostChecked] = useState(true);
 
+    // Load
+    const [loadChecked, setLoadChecked]=useState(true)
 
 
     // eslint-disable-next-line no-unused-vars
@@ -99,6 +103,8 @@ function SelectedMonthData() {
         fetchData();
     };
 
+    console.log(data)
+
     useEffect(() => {
         if (data) {
             const daysInMonth = new Date(+year, +month, 0).getDate();
@@ -131,6 +137,26 @@ function SelectedMonthData() {
                         data: labels.map(day => {
                             const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
                             return dataPoint ? dataPoint.heavy_energy: 0;
+                        }),
+                        backgroundColor: "rgba(75, 192, 192, 0.8)",
+                    });
+                }
+                if (coolingPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Heavy Energy",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.heavy_energy: 0;
+                        }),
+                        backgroundColor: "rgba(75, 192, 192, 0.8)",
+                    });
+                }
+                if (criticalPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Cooling Energy",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.light_energy: 0;
                         }),
                         backgroundColor: "rgba(75, 192, 192, 0.8)",
                     });
@@ -225,6 +251,8 @@ function SelectedMonthData() {
                 switch (label) {
                     case "DPDC Energy":
                     case "Generator Energy":
+                    case "Critical Energy":
+                    case "Cooling Energy":
                         return "kWh";
                     case "Generator Fuel":
                         return "L";
@@ -247,7 +275,9 @@ function SelectedMonthData() {
         dpdcPowerChecked,
         dpdcCostChecked,
         generatorPowerChecked,
-        generatorCostChecked
+        generatorCostChecked,
+        criticalPowerChecked,
+        coolingPowerChecked
 
     ]);
 
@@ -277,6 +307,20 @@ function SelectedMonthData() {
             setDpdcCostChecked(false);
             setGeneratorPowerChecked(false);
             setGeneratorCostChecked(false)
+        }
+    };
+    const handleLoadCheckboxChange = event => {
+        const isChecked = event.target.checked;
+        setLoadChecked(isChecked);
+
+        if (isChecked) {
+            setCriticalPowerChecked(true);
+            setCoolingPowerChecked(true);
+            
+            
+        } else {
+            setCriticalPowerChecked(false);
+            setCoolingPowerChecked(false);
         }
     };
 
@@ -467,6 +511,107 @@ function SelectedMonthData() {
                                                 style={{ color: "gray", marginLeft: "15px" }}
                                             >
                                                 Generator{" "}
+                                            </label>
+                                        </li>
+
+                                    </>
+                                )}
+                            </ul>
+                            <ul style={{ listStyleType: "none", padding: 0 }}>
+                                <li
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginBottom: "25px",
+                                    }}
+                                >
+                                    {/* <FontAwesomeIcon
+                    icon={faCaretRight}
+                    style={{
+                      transform: sourceChecked
+                        ? "rotate(90deg)"
+                        : "rotate(0deg)",
+                      transition: "transform 0.3s ease",
+                      marginRight: "15px",
+                      color: "rgb(169, 169, 169)",
+                    }}
+                  /> */}
+                                    <input
+                                        type="checkbox"
+                                        id="loadCheckbox"
+                                        name="load"
+                                        checked={loadChecked}
+                                        onChange={handleLoadCheckboxChange}
+                                        style={{ marginRight: "10px" }}
+                                    />
+                                    <label
+                                        htmlFor="loadCheckbox"
+                                        style={{
+                                            color: "gray",
+                                            marginLeft: "5px",
+                                            fontWeight: "700",
+                                        }}
+                                    >
+                                        Load
+                                    </label>
+                                </li>
+                                {loadChecked && (
+                                    <>
+                                        <li
+                                            style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                marginLeft: "40px",
+                                                marginBottom: "25px",
+                                            }}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id="coolingPowerCheckbox"
+                                                name="coolingPower"
+                                                checked={coolingPowerChecked}
+                                                onChange={e =>
+                                                    handleCheckboxChange(
+                                                        setCoolingPowerChecked,
+                                                        e.target.checked
+                                                    )
+                                                }
+                                                style={{ marginRight: "5px" }}
+                                            />
+                                            <label
+                                                htmlFor="coolingPowerCheckbox"
+                                                style={{ color: "gray", marginLeft: "15px" }}
+                                            >
+                                                Cooling{" "}
+                                            </label>
+                                        </li>
+                                        
+                                        <li
+                                            style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                marginLeft: "40px",
+                                                marginBottom: "25px",
+                                            }}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id="criticalPowerCheckbox"
+                                                name="criticalPower"
+                                                checked={criticalPowerChecked}
+                                                onChange={e =>
+                                                    handleCheckboxChange(
+                                                        setCriticalPowerChecked,
+                                                        e.target.checked
+                                                    )
+                                                }
+                                                style={{ marginRight: "5px" }}
+                                            />
+                                            <label
+                                                htmlFor="criticalPowerCheckbox"
+                                                style={{ color: "gray", marginLeft: "15px" }}
+                                            >
+                                                Critical{" "}
                                             </label>
                                         </li>
 
