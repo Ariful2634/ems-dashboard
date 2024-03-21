@@ -7,13 +7,13 @@ import { useQuery } from '@tanstack/react-query';
 import { FaCircle } from "react-icons/fa";
 
 const Daily_Dpdc_Chart = () => {
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(null);
     const [startTime, setStartTime] = useState(null); // State to store the start time
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     useEffect(() => {
         // Calculate the start time (6 AM) whenever the component is rendered

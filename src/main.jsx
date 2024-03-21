@@ -27,6 +27,9 @@ import UpdateProfile from './Components/Dashboard/UpdateProfile';
 import Dbdc_Energy from './Components/Dashboard/DBDC_Energy/Dbdc_Energy';
 import TotalData from './Components/Dashboard/Total_Data/TotalData';
 import Analysis_Pro from './Components/Dashboard/Analysis_Pro/Analysis_Pro';
+import SelectedDateData from './Components/Dashboard/Analysis_Pro/SelectedDateData';
+import SelectedMonthData from './Components/Dashboard/Analysis_Pro/SelectedMonthData';
+import SelectedYearData from './Components/Dashboard/Analysis_Pro/SelectedYearData';
 
 
 const queryClient = new QueryClient()
@@ -62,7 +65,22 @@ const router = createBrowserRouter([
       },
       {
         path:'/analysisPro',
-        element:<Analysis_Pro></Analysis_Pro>
+        element:<Analysis_Pro></Analysis_Pro>,
+        
+         
+        
+      },
+      {
+        path:'selectedDateData',
+        element:<SelectedDateData></SelectedDateData>
+      },
+      {
+        path:'selectedMonthData',
+        element:<SelectedMonthData></SelectedMonthData>
+      },
+      {
+        path:'selectedYearData',
+        element:<SelectedYearData></SelectedYearData>
       },
       {
         path:'/dashboard',

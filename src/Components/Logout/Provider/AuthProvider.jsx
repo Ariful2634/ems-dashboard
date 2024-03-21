@@ -4,7 +4,7 @@ import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-    const [logout, setLogout] = useState(null);
+    const [getToken, setGetToken] = useState(null);
 
     useEffect(() => {
         const getCookie = (name) => {
@@ -14,22 +14,22 @@ const AuthProvider = ({ children }) => {
         };
 
         const token = getCookie('token');
-        setLogout(token);
+        setGetToken(token);
     }, []); 
 
     const updateToken = (newToken) => {
         const expires = new Date(Date.now() + 8 * 60 * 60 * 1000).toUTCString();
         document.cookie = `token=${newToken}; expires=${expires}; path=/`;
-        setLogout(newToken);
+        setGetToken(newToken);
     };
 
     const clearToken = () => {
         document.cookie = 'token=; path=/;';
-        setLogout(null);
+        setGetToken(null);
     };
 
     const authInfo = {
-        logout,
+        getToken,
         updateToken,
         clearToken
     };

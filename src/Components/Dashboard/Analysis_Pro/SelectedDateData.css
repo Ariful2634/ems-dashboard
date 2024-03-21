@@ -1,8 +1,56 @@
+.daily_power {
+  border: 1px solid rgb(196, 195, 195);
+  padding: 5px 50px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  font-weight: 600;
+  background-color: rgb(255, 255, 255);
+}
+.daily_power.active {
+  background-color: rgb(194, 243, 209);
+}
+
+.monthly_energy {
+  border: 1px solid rgb(196, 195, 195);
+  padding: 5px 50px;
+  font-weight: 600;
+  background-color: rgb(255, 255, 255);
+}
+
+.monthly_energy.active {
+  background-color: rgb(194, 243, 209);
+}
+.yearly_energy {
+  border: 1px solid rgb(196, 195, 195);
+  padding: 5px 50px;
+  font-weight: 600;
+  background-color: rgb(255, 255, 255);
+}
+
+.yearly_energy.active {
+  background-color: rgb(194, 243, 209);
+}
+
+.yearly_energy {
+  border: 1px solid rgb(196, 195, 195);
+  padding: 5px 50px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  font-weight: 600;
+  background-color: rgb(255, 255, 255);
+}
+
+.yearly_energy.active {
+  background-color: rgb(194, 243, 209);
+}
+
+
 .dgrbuttongroup {
     margin: 15px 0px 10px 0px;
     text-align: center;
   }
   
+
   .power_button {
     border: 1px solid rgb(196, 195, 195);
     padding: 5px 50px;

@@ -8,12 +8,12 @@ import { FaCircle } from "react-icons/fa";
 
 
 const Yearly_Dpdc_Chart = () => {
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     const fetchData = async () => {
         try {

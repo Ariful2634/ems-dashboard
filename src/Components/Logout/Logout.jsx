@@ -14,14 +14,14 @@ import { useQuery } from "@tanstack/react-query";
 
 
 const Logout = () => {
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const navigate = useNavigate()
 
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     const fetchDatas = async () => {
         try {
@@ -73,7 +73,7 @@ const Logout = () => {
     };
 
     return (
-        <div>
+        <div className="text-black">
             <div className="dropdown dropdown-end">
                 <details className="dropdown">
                     <summary className="m-1 btn bg-transparent border-none text-white"><CgProfile className="lg:text-xl" /> {user.first_name}</summary>
@@ -93,7 +93,7 @@ const Logout = () => {
                         <div className="modal-box-1 w-full max-w-5xl mb-8 h-12 flex justify-center items-center bg-blue-500 rounded-lg">
                             <h3 className="font-bold text-xl text-white flex items-center gap-3"><IoPersonSharp /> Personal Data</h3>
                         </div>
-                        <div className="text-white text-lg mb-4 space-y-3 ">
+                        <div className="text-black font-bold text-lg mb-4 space-y-3 ">
                             <h2 className="flex items-center gap-2"><IoPersonSharp className="text-blue-500" /> Name: {user.first_name}</h2>
                             <h2 className="flex items-center gap-2"><MdEmail className="text-green-700" /> Email: {user.email}</h2>
                             <h2 className="flex items-center gap-2"><HiPhone className="text-orange-500" /> Phone: {user.phone_no}</h2>

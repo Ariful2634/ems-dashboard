@@ -7,12 +7,12 @@ import { AuthContext } from "../Logout/Provider/AuthProvider";
 
 const UpdateProfile = () => {
 
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     const handleUpdate = async (e) => {
         e.preventDefault();

@@ -1,0 +1,144 @@
+
+/* three buttons --------------------------------------------------------------------------------------------- */
+.monthly_dgrbuttongroup {
+    margin: 15px 0px 10px 0px;
+    text-align: center;
+  }
+  
+  .monthly_power_button {
+    border: 1px solid rgb(196, 195, 195);
+    padding: 5px 50px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    font-weight: 600;
+    background-color: rgb(255, 255, 255);
+  }
+  
+  .monthly_power_button.active {
+    background-color: rgb(194, 243, 209);
+  }
+  
+  .monthly_power_button:hover {
+    border: 1px solid green;
+    background-color: rgb(194, 243, 209);
+    font-weight: bolder;
+  }
+  
+  .monthly_cost_button {
+    border: 1px solid rgb(196, 195, 195);
+    padding: 5px 50px;
+    font-weight: 600;
+    background-color: rgb(255, 255, 255);
+  }
+  
+  .monthly_cost_button.active {
+    background-color: rgb(194, 243, 209);
+  }
+  
+  .monthly_cost_button:hover {
+    border: 1px solid green;
+    background-color: rgb(194, 243, 209);
+    font-weight: bolder;
+  }
+  
+  .monthly_diesel_button {
+    border: 1px solid rgb(196, 195, 195);
+    padding: 5px 50px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    font-weight: 600;
+    background-color: rgb(255, 255, 255);
+  }
+  
+  .monthly_diesel_button.active {
+    background-color: rgb(194, 243, 209);
+  }
+  
+  .monthly_diesel_button:hover {
+    border: 1px solid green;
+    background-color: rgb(194, 243, 209);
+    font-weight: bolder;
+  }
+  
+  /* Container for the form inputs------------------------------------------------------------------------------------------- */
+  .form-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: safe center;
+      margin: 20px 0px 20px 0px;
+  }
+  
+  .form-container label {
+      font-size: 16px;
+      font-weight: 600;
+      color: rgb(61, 61, 61);
+  }
+  
+  .month-div,
+  .year-div {
+      margin: 0 15px;
+      border: 3px solid #999999;
+      border-radius: 15px;
+      transition: border-color 0.3s, color 0.3s; 
+  }
+  
+  /* Hover effect */
+  .month-div:hover,
+  .year-div:hover {
+      border: 3px solid blue; 
+      color: rgb(31, 30, 30);
+  } 
+  
+  /* Style for the select element */
+  .dgr-M-select-customize {
+      padding: 5px;
+      font-size: 18px;
+      border: 1px solid transparent; /* Updated line */
+      border-radius: 15px;
+      background: none;
+      outline: none;
+  }
+  /* .dgr-M-select-customize:focus {
+      outline: none;
+  } */
+  
+  /* Style for the option elements */
+  .dgr-M-option-customize {
+      font-size: 16px;
+      font-weight: 700; 
+      background: none;
+      border: 1px solid transparent; /* Updated line */
+      outline: none;
+  }
+  
+  .dgr-M-button-customize {
+      padding: 6px 30px;
+      font-size: 17px;
+      font-weight: 700;
+      border: 3px solid #999999;
+      border-radius: 20px;
+      background-color: #dfdfdf;
+      outline: none; 
+      color: rgb(61, 61, 61);
+      transition: border-color 0.3s, color 0.3s; 
+  }
+  
+  /* Hover effect */
+  .dgr-M-button-customize:hover {
+      border: 3px solid blue; 
+      color: rgb(31, 30, 30);
+  } 
+  
+  .dgr-m-icon {
+      font-size: 20px;
+      color: rgba(118, 156, 156, 0.781);
+      margin: 0px 10px;
+  }
+  .dgr-m-icon:hover { 
+      color: rgba(44, 7, 211, 0.781); 
+  }
+  .dgr-monthly-chart-container{
+   width: 100%;
+   height: 60vh;
+  }
+  

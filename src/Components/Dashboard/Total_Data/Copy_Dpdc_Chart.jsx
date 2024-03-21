@@ -4,13 +4,13 @@ import axios from "axios";
 import { Pie, PieChart, Tooltip, Cell } from 'recharts';
 
 const Copy_Dpdc_Chart = () => {
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(null);
     const [dpdcChart, setDpdcChart] = useState([]);
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     useEffect(() => {
         const fetchDpdcChart = async () => {

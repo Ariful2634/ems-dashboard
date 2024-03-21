@@ -10,7 +10,7 @@ import "./SelectedDateData.css";
 import { AuthContext } from '../../Logout/Provider/AuthProvider';
 
 const SelectedDateData = () => {
-   
+
     const currentDate = format(new Date(), 'yyyy-MM-dd');
     const [startDate, setStartDate] = useState(currentDate);
     const [endDate, setEndDate] = useState(currentDate);
@@ -26,15 +26,15 @@ const SelectedDateData = () => {
 
     const chartRef = React.createRef(null);
 
-    const { logout } = useContext(AuthContext);
-    const [token, setToken] = useState(null);
+    const { getToken } = useContext(AuthContext);
+    const [token, setToken] = useState(getToken);
 
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
-    console.log(token)
+    // console.log(token)
 
 
     useEffect(() => {
@@ -98,14 +98,14 @@ const SelectedDateData = () => {
         // Initialize an empty array to store datasets
         const datasets = [];
 
-         // Initialize an empty array to Populate data  based on selected buttons and checkboxes
+        // Initialize an empty array to Populate data  based on selected buttons and checkboxes
         let powerData = [];
         let costData = [];
         // Populate data arrays based on selected buttons and checkboxes
         data.forEach(item => {
             const date = new Date(item.timedate);
             date.setHours(date.getHours() - 6); // Subtracting 6 hours
-    
+
             if (selectedButtons.includes('power') && checkboxes.sourceCheckbox && checkboxes.sourceCheckbox1) {
                 powerData.push(item.dpdc_power);
             }
@@ -272,7 +272,7 @@ const SelectedDateData = () => {
                 if (tooltip && tooltip._active && tooltip._active.length > 0) { // Check if tooltip and tooltip._active exist
                     const xCoor = x.getPixelForValue(tooltip.dataPoints[0].dataIndex);
                     const yCoor = y.getPixelForValue(tooltip.dataPoints[0].parsed.y);
-        
+
                     ctx.save();
                     ctx.beginPath();
                     ctx.lineWidth = 1;
@@ -281,7 +281,7 @@ const SelectedDateData = () => {
                     ctx.lineTo(xCoor, bottom);
                     ctx.stroke();
                     ctx.closePath();
-            }
+                }
 
             }
         };
@@ -474,11 +474,11 @@ const SelectedDateData = () => {
             </div>
 
             {/* checkbox and chart */}
-            <div className='row'>
-                <div className='col-md-2 d-flex'>
-                    <div className="checkbox_container flex-grow-1">
-                        <div className="card h-100">
-                            <div className="card-body">
+            <div className='flex  gap-5  '>
+                <div className=''>
+                    <div className="checkbox_container w-[250px] ">
+                        <div className="">
+                            <div className=" shadow-xl p-5">
                                 <div className='Parent_source_Checkboxes'>
                                     {/* Parent source Checkboxes */}
                                     <div className="parent_checkbox">
@@ -580,13 +580,9 @@ const SelectedDateData = () => {
                         </div>
                     </div>
                 </div>
-                <div className='col-md-10 '>
-                    <div className='card h-100'>
-                        <div className='card-body'>
-                            <div className="chart_container">
-                                <canvas ref={chartRef} height={'80%'}></canvas>
-                            </div>
-                        </div>
+                <div className='h-[100%]  w-[100%] '>
+                    <div className='chart_container pr-10'>
+                        <canvas ref={chartRef} height={'80%'} ></canvas>
                     </div>
                 </div>
             </div>

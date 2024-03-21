@@ -11,15 +11,15 @@ const Monitor_Load_Table = () => {
     const [sortAscending, setSortAscending] = useState(true);
     const [sortBy, setSortBy] = useState("");
 
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(null);
     const [dpdc, setDpdc] = useState({})
     const [generator, setGenerator] = useState({})
 
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     const fetchLoadLight = async () => {
         try {

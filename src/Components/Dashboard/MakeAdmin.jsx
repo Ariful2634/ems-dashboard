@@ -7,12 +7,12 @@ import Swal from "sweetalert2";
 
 const MakeAdmin = () => {
 
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     const fetchData = async () => {
         try {

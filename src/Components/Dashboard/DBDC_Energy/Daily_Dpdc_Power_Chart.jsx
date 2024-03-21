@@ -5,13 +5,13 @@ import axios from 'axios';
 
 
 const Daily_Dpdc_Power_Chart = () => {
-    const { logout } = useContext(AuthContext);
+    const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(null);
     const [power, setPower] = useState(0);
 
     useEffect(() => {
-        setToken(logout);
-    }, [logout]);
+        setToken(getToken);
+    }, [getToken]);
 
     const fetchData = async () => {
         try {
