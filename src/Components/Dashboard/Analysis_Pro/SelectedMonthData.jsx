@@ -49,6 +49,11 @@ function SelectedMonthData() {
     // Cost
     const [dpdcCostChecked, setDpdcCostChecked] = useState(true);
     const [generatorCostChecked, setGeneratorCostChecked] = useState(true);
+    const [criticalCostChecked, setCriticalCostChecked] = useState(true);
+    const [coolingCostChecked, setCoolingCostChecked] = useState(true);
+
+    // diesel
+    const [generatorFuelChecked, setGeneratorFuelChecked] = useState(true)
 
     // Load
     const [loadChecked, setLoadChecked]=useState(true)
@@ -189,6 +194,44 @@ function SelectedMonthData() {
                         yAxisID: "costAxis",
                     });
                 }
+                if (criticalCostChecked && criticalPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Heavy Cost",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.heavy_cost : 0;
+                        }),
+                        backgroundColor: "rgba(255, 159, 64, 0.8)",
+                        yAxisID: "costAxis",
+                    });
+                }
+                if (coolingCostChecked && coolingPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Cooling Cost",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.light_cost : 0;
+                        }),
+                        backgroundColor: "rgba(255, 159, 64, 0.8)",
+                        yAxisID: "costAxis",
+                    });
+                }
+            }
+
+            if (selectedButtons.includes("diesel")) {
+                if (generatorCostChecked && generatorPowerChecked && generatorFuelChecked) {
+                    newChartData.datasets.push({
+                        label: "Generator Fuel",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.generator_fuel_intake : 0;
+                        }),
+                        backgroundColor: "rgba(255, 159, 64, 0.8)",
+                        yAxisID: "costAxis",
+                    });
+                }
+                
+                
             }
             setChartData(newChartData);
 
@@ -258,6 +301,8 @@ function SelectedMonthData() {
                         return "L";
                     case "DPDC Cost":
                     case "Generator Cost":
+                    case "Heavy Cost":
+                    case "Cooling Cost":
                         return "৳";
                     default:
                         return "";
@@ -277,7 +322,10 @@ function SelectedMonthData() {
         generatorPowerChecked,
         generatorCostChecked,
         criticalPowerChecked,
-        coolingPowerChecked
+        coolingPowerChecked,
+        criticalCostChecked,
+        coolingCostChecked,
+        generatorFuelChecked
 
     ]);
 
@@ -302,11 +350,18 @@ function SelectedMonthData() {
             setDpdcCostChecked(true);
             setGeneratorPowerChecked(true)
             setGeneratorCostChecked(true)
+            setGeneratorFuelChecked(true)
+            
+           
         } else {
             setDpdcPowerChecked(false);
             setDpdcCostChecked(false);
             setGeneratorPowerChecked(false);
-            setGeneratorCostChecked(false)
+            setGeneratorCostChecked(false);
+            setGeneratorFuelChecked(false)
+            
+          
+            
         }
     };
     const handleLoadCheckboxChange = event => {
@@ -315,12 +370,16 @@ function SelectedMonthData() {
 
         if (isChecked) {
             setCriticalPowerChecked(true);
+            setCriticalCostChecked(true)
             setCoolingPowerChecked(true);
+            setCoolingCostChecked(true)
             
             
         } else {
             setCriticalPowerChecked(false);
+            setCriticalCostChecked(false)
             setCoolingPowerChecked(false);
+            setCoolingCostChecked(false)
         }
     };
 
