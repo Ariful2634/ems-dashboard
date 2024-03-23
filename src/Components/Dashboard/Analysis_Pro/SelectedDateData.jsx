@@ -5,8 +5,6 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import Chart from 'chart.js/auto';
 import "./SelectedDateData.css";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from '../../Logout/Provider/AuthProvider';
 
 const SelectedDateData = () => {
@@ -474,25 +472,14 @@ const SelectedDateData = () => {
             </div>
 
             {/* checkbox and chart */}
-            <div className='flex  gap-5  '>
+            <div className='flex  gap-5 p-6 '>
                 <div className=''>
-                    <div className="checkbox_container w-[250px] ">
+                    <div className="checkbox_container  w-[230px] ">
                         <div className="">
-                            <div className=" shadow-xl p-5">
+                            <div className=" shadow-xl p-[34px]">
                                 <div className='Parent_source_Checkboxes'>
                                     {/* Parent source Checkboxes */}
                                     <div className="parent_checkbox">
-
-                                        {/* <FontAwesomeIcon
-                                            icon={faCaretRight}
-                                            style={{
-                                                transform: checkboxes.sourceCheckbox ? 'rotate(90deg)' : 'rotate(0deg)',
-                                                transition: 'transform 0.3s ease',
-                                                marginRight: '10px',
-                                                color: 'rgb(169, 169, 169)'
-                                            }}
-                                        /> */}
-
                                         <input
                                             type="checkbox"
                                             id="sourceCheckbox"
@@ -532,15 +519,6 @@ const SelectedDateData = () => {
                                 <div className="Parent_load_Checkboxes">
                                     {/* Parent Load Checkboxes */}
                                     <div className="parent_checkbox">
-                                        {/* <FontAwesomeIcon
-                                            icon={faCaretRight}
-                                            style={{
-                                                transform: checkboxes.loadCheckbox ? 'rotate(90deg)' : 'rotate(0deg)',
-                                                transition: 'transform 0.3s ease',
-                                                marginRight: '10px',
-                                                color: 'rgb(169, 169, 169)'
-                                            }}
-                                        /> */}
                                         <input
                                             type="checkbox"
                                             id="loadCheckbox"
@@ -580,8 +558,8 @@ const SelectedDateData = () => {
                         </div>
                     </div>
                 </div>
-                <div className='h-[100%]  w-[100%] '>
-                    <div className='chart_container pr-10'>
+                <div className='h-[100%]  w-[100%] shadow-xl p-2 rounded'>
+                    <div className='chart_container '>
                         <canvas ref={chartRef} height={'80%'} ></canvas>
                     </div>
                 </div>

@@ -74,20 +74,20 @@
       color: rgb(61, 61, 61);
   }
   
-  .month-div,
+  /* .month-div,
   .year-div {
       margin: 0 15px;
       border: 3px solid #999999;
       border-radius: 15px;
       transition: border-color 0.3s, color 0.3s; 
-  }
+  } */
   
   /* Hover effect */
-  .month-div:hover,
+  /* .month-div:hover,
   .year-div:hover {
       border: 3px solid blue; 
       color: rgb(31, 30, 30);
-  } 
+  }  */
   
   /* Style for the select element */
   .dgr-M-select-customize {
@@ -111,7 +111,7 @@
       outline: none;
   }
   
-  .dgr-M-button-customize {
+  /* .dgr-M-button-customize {
       padding: 6px 30px;
       font-size: 17px;
       font-weight: 700;
@@ -121,7 +121,7 @@
       outline: none; 
       color: rgb(61, 61, 61);
       transition: border-color 0.3s, color 0.3s; 
-  }
+  } */
   
   /* Hover effect */
   .dgr-M-button-customize:hover {

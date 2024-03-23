@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 import { AuthContext } from '../../Logout/Provider/AuthProvider';
 import axios from 'axios';
 
@@ -84,7 +84,7 @@ const Daily_Dpdc_Power_Chart = () => {
                         <Cell key={`cell-${index}`} fill={index === ranges.length - 1 ? '#800080' : chartColor} />
                     ))}
                 </Pie>
-                <Tooltip />
+               
                 {ranges.map((entry, index) => (
                     <text
                         key={`label-${index}`}

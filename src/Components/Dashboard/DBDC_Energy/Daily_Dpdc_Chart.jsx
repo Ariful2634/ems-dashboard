@@ -89,7 +89,7 @@ const Daily_Dpdc_Chart = () => {
             const dpdcPower = payload[0].payload.dpdcPower; // Get the DPDC power from payload
 
             return (
-                <div className="custom-tooltip bg-black p-3 rounded-lg">
+                <div className="custom-tooltip bg-black p-3 text-white rounded-lg">
                     <p className="time text-center">{time}</p>
                     <hr className="line" />
                     <p className='flex items-center justify-center gap-1'><FaCircle className='text-xs text-purple-600' /> DPDC Energy : {dpdcPower.toFixed(3)} kWh</p>

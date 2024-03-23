@@ -1,3 +1,5 @@
+/* ---------------Analysis Pro Start--------------- */
+
 .daily_power {
   border: 1px solid rgb(196, 195, 195);
   padding: 5px 50px;
@@ -44,6 +46,7 @@
   background-color: rgb(194, 243, 209);
 }
 
+/* ---------------Analysis Pro End--------------- */
 
 .dgrbuttongroup {
     margin: 15px 0px 10px 0px;

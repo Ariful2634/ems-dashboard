@@ -56,7 +56,7 @@ const Yearly_Dpdc_Chart = () => {
         if (active && payload && payload.length) {
             const month = payload[0].payload.month;
             return (
-                <div className="custom-tooltip bg-black p-3 rounded-lg">
+                <div className="custom-tooltip bg-black p-3 text-white rounded-lg">
                     <p className="date text-center">{month}</p>
                     <hr className="line" />
                     <p className='flex items-center justify-center gap-1'><FaCircle className='text-xs text-purple-600' /> DPDC Energy(kWh) : {payload[0].value.toFixed(2)}</p>
@@ -90,7 +90,7 @@ const Yearly_Dpdc_Chart = () => {
                     tick={{ fill: 'black' }}
                     interval={0} // Disable automatic skipping of ticks
                 />
-                <YAxis tick={{ fill: 'black' }} />
+                <YAxis tick={{ fill: 'black' }} domain={[0, 1200]}/>
                 <Tooltip content={<CustomTooltip />} contentStyle={{ color: 'black' }} />
                 {/* <Legend /> */}
                 <CartesianGrid stroke="#7C7C7C" />

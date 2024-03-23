@@ -71,7 +71,7 @@ const Monthly_Dpdc_Chart = () => {
         if (active && payload && payload.length) {
             const date = payload[0].payload.date;
             return (
-                <div className="custom-tooltip bg-black p-3 rounded-lg">
+                <div className="custom-tooltip bg-black p-3 text-white rounded-lg">
                     <p className="date text-center">{formatDate(date)}</p>
                     <hr className="line" />
                     <p className='flex items-center justify-center gap-1'><FaCircle className='text-xs text-purple-600' /> DPDC Energy(kWh) : {payload[0].value.toFixed(2)}</p>

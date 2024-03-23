@@ -1,16 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-inner-declarations */
 import { useContext, useState, useEffect } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCalendarAlt, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import Chart from "chart.js/auto";
 import "./SelectedMonthData.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import { AuthContext } from "../../Logout/Provider/AuthProvider";
 
 function SelectedMonthData() {
-    //   const { token, isAdmin, setToken, setIsAdmin } = useContext(MyContext);
 
     const { getToken } = useContext(AuthContext);
     const [token, setToken] = useState(getToken);
@@ -20,7 +17,7 @@ function SelectedMonthData() {
         setToken(getToken);
     }, [getToken]);
 
-    console.log(token)
+    // console.log(token)
 
     const months = [
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
@@ -43,11 +40,20 @@ function SelectedMonthData() {
     // Power
     const [dpdcPowerChecked, setDpdcPowerChecked] = useState(true);
     const [generatorPowerChecked, setGeneratorPowerChecked] = useState(true);
+    const [coolingPowerChecked, setCoolingPowerChecked] = useState(true);
+    const [criticalPowerChecked, setCriticalPowerChecked] = useState(true);
 
     // Cost
     const [dpdcCostChecked, setDpdcCostChecked] = useState(true);
     const [generatorCostChecked, setGeneratorCostChecked] = useState(true);
+    const [criticalCostChecked, setCriticalCostChecked] = useState(true);
+    const [coolingCostChecked, setCoolingCostChecked] = useState(true);
 
+    // diesel
+    const [generatorFuelChecked, setGeneratorFuelChecked] = useState(true)
+
+    // Load
+    const [loadChecked, setLoadChecked] = useState(true)
 
 
     // eslint-disable-next-line no-unused-vars
@@ -99,6 +105,8 @@ function SelectedMonthData() {
         fetchData();
     };
 
+    console.log(data)
+
     useEffect(() => {
         if (data) {
             const daysInMonth = new Date(+year, +month, 0).getDate();
@@ -130,14 +138,34 @@ function SelectedMonthData() {
                         label: "Generator Energy",
                         data: labels.map(day => {
                             const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
-                            return dataPoint ? dataPoint.heavy_energy: 0;
+                            return dataPoint ? dataPoint.generator_energy : 0;
                         }),
-                        backgroundColor: "rgba(75, 192, 192, 0.8)",
+                        backgroundColor: "rgba(155, 199, 132, 0.8)",
+                    });
+                }
+                if (coolingPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Cooling Load Energy",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.heavy_energy : 0;
+                        }),
+                        backgroundColor: "rgba(220, 144, 64, 0.5)",
+                    });
+                }
+                if (criticalPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Critical Load Energy",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.light_energy : 0;
+                        }),
+                        backgroundColor: "rgba(245, 40, 145, 0.8)",
                     });
                 }
             }
 
-            
+
 
 
             if (selectedButtons.includes("cost")) {
@@ -148,7 +176,7 @@ function SelectedMonthData() {
                             const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
                             return dataPoint ? dataPoint.dpdc_cost : 0;
                         }),
-                        backgroundColor: "rgba(255, 159, 64, 0.8)",
+                        backgroundColor: "rgba(18, 159, 255, 1)",
                         yAxisID: "costAxis",
                     });
                 }
@@ -157,12 +185,50 @@ function SelectedMonthData() {
                         label: "Generator Cost",
                         data: labels.map(day => {
                             const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
-                            return dataPoint ? dataPoint.heavy_cost : 0;
+                            return dataPoint ? dataPoint.generator_cost : 0;
                         }),
-                        backgroundColor: "rgba(255, 159, 64, 0.8)",
+                        backgroundColor: "rgba(253, 255, 18, 1)",
                         yAxisID: "costAxis",
                     });
                 }
+                if (criticalCostChecked && criticalPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Critical Load Cost",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.light_cost : 0;
+                        }),
+                        backgroundColor: "rgba(17, 81, 40, 1)",
+                        yAxisID: "costAxis",
+                    });
+                }
+                if (coolingCostChecked && coolingPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Cooling Load Cost",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.heavy_cost : 0;
+                        }),
+                        backgroundColor: "rgba(3, 81, 41, 0.55)",
+                        yAxisID: "costAxis",
+                    });
+                }
+            }
+
+            if (selectedButtons.includes("diesel")) {
+                if (generatorCostChecked && generatorPowerChecked && generatorFuelChecked) {
+                    newChartData.datasets.push({
+                        label: "Diesel Tank",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.generator_fuel_intake : 0;
+                        }),
+                        backgroundColor: "rgba(0, 0, 0, 0.55)",
+                        yAxisID: "costAxis",
+                    });
+                }
+
+
             }
             setChartData(newChartData);
 
@@ -225,11 +291,15 @@ function SelectedMonthData() {
                 switch (label) {
                     case "DPDC Energy":
                     case "Generator Energy":
+                    case "Critical Load Energy":
+                    case "Cooling Load Energy":
                         return "kWh";
-                    case "Generator Fuel":
+                    case "Diesel Tank":
                         return "L";
                     case "DPDC Cost":
                     case "Generator Cost":
+                    case "Critical Load Cost":
+                    case "Cooling Load Cost":
                         return "৳";
                     default:
                         return "";
@@ -247,7 +317,12 @@ function SelectedMonthData() {
         dpdcPowerChecked,
         dpdcCostChecked,
         generatorPowerChecked,
-        generatorCostChecked
+        generatorCostChecked,
+        criticalPowerChecked,
+        coolingPowerChecked,
+        criticalCostChecked,
+        coolingCostChecked,
+        generatorFuelChecked
 
     ]);
 
@@ -272,18 +347,43 @@ function SelectedMonthData() {
             setDpdcCostChecked(true);
             setGeneratorPowerChecked(true)
             setGeneratorCostChecked(true)
+            setGeneratorFuelChecked(true)
+
+
         } else {
             setDpdcPowerChecked(false);
             setDpdcCostChecked(false);
             setGeneratorPowerChecked(false);
-            setGeneratorCostChecked(false)
+            setGeneratorCostChecked(false);
+            setGeneratorFuelChecked(false)
+
+
+
+        }
+    };
+    const handleLoadCheckboxChange = event => {
+        const isChecked = event.target.checked;
+        setLoadChecked(isChecked);
+
+        if (isChecked) {
+            setCriticalPowerChecked(true);
+            setCriticalCostChecked(true)
+            setCoolingPowerChecked(true);
+            setCoolingCostChecked(true)
+
+
+        } else {
+            setCriticalPowerChecked(false);
+            setCriticalCostChecked(false)
+            setCoolingPowerChecked(false);
+            setCoolingCostChecked(false)
         }
     };
 
 
 
     return (
-        <div className="overflow-x-hidden">
+        <div className="overflow-x-hidden px-6">
             <div className="btn-group monthly_dgrbuttongroup">
                 <button
                     className={`monthly_power_button ${selectedButtons.includes("power") ? "active" : ""
@@ -307,20 +407,19 @@ function SelectedMonthData() {
                     Diesel
                 </button>
             </div>
-            <div className="form-container">
-                <div className="month-div">
+            <div className="form-container ">
+                <div className=" px-2 py-3 mr-3 border rounded border-blue-600">
                     <form onSubmit={handleSubmit}>
                         <label>
-                            {/* <FontAwesomeIcon className="dgr-m-icon" icon={faCalendarAlt} /> */}
                             Month:
                             <select
-                                className="dgr-M-select-customize"
+                               
                                 value={month}
                                 onChange={e => setMonth(e.target.value)}
                             >
                                 {months.map((month, index) => (
                                     <option
-                                        className="dgr-M-option-customize"
+                                        
                                         key={index + 1}
                                         value={(index + 1).toString()}
                                     >
@@ -331,19 +430,18 @@ function SelectedMonthData() {
                         </label>
                     </form>
                 </div>
-                <div className="year-div">
+                <div className=" px-2 py-3 mr-3 border rounded border-blue-600">
                     <form onSubmit={handleSubmit}>
                         <label>
-                            {/* <FontAwesomeIcon className="dgr-m-icon" icon={faCalendarAlt} /> */}
                             Year:
                             <select
-                                className="dgr-M-select-customize"
+                                
                                 value={year}
                                 onChange={e => setYear(e.target.value)}
                             >
                                 {Array.from({ length: 2030 - 2020 + 1 }, (_, index) => (
                                     <option
-                                        className="dgr-M-option-customize"
+                                        
                                         key={2020 + index}
                                         value={2020 + index}
                                     >
@@ -354,10 +452,10 @@ function SelectedMonthData() {
                         </label>
                     </form>
                 </div>
-                <div className="submit-div">
+                <div className="btn btn-primary btn-outline">
                     <form onSubmit={handleSubmit}>
                         <button
-                            className="dgr-M-button-customize"
+                            className=""
                             type="submit"
                             disabled={loading}
                         >
@@ -369,9 +467,9 @@ function SelectedMonthData() {
             {error ? (
                 <p>{error}</p>
             ) : data ? (
-                <div>
-                    <div className="row">
-                        <div className="col-xl-2 col-md-2 col-sm-2 dgr_chekbox_container">
+                <div className="">
+                    <div className="flex items-center gap-5 p-6">
+                        <div className=" h-[50vh] rounded font-bold shadow-xl p-6">
                             <ul style={{ listStyleType: "none", padding: 0 }}>
                                 <li
                                     style={{
@@ -380,17 +478,7 @@ function SelectedMonthData() {
                                         marginBottom: "25px",
                                     }}
                                 >
-                                    {/* <FontAwesomeIcon
-                    icon={faCaretRight}
-                    style={{
-                      transform: sourceChecked
-                        ? "rotate(90deg)"
-                        : "rotate(0deg)",
-                      transition: "transform 0.3s ease",
-                      marginRight: "15px",
-                      color: "rgb(169, 169, 169)",
-                    }}
-                  /> */}
+
                                     <input
                                         type="checkbox"
                                         id="sourceCheckbox"
@@ -402,7 +490,7 @@ function SelectedMonthData() {
                                     <label
                                         htmlFor="sourceCheckbox"
                                         style={{
-                                            color: "gray",
+                                            color: "black",
                                             marginLeft: "5px",
                                             fontWeight: "700",
                                         }}
@@ -435,12 +523,12 @@ function SelectedMonthData() {
                                             />
                                             <label
                                                 htmlFor="dpdcPowerCheckbox"
-                                                style={{ color: "gray", marginLeft: "15px" }}
+                                                style={{ color: "black", marginLeft: "15px" }}
                                             >
                                                 DPDC{" "}
                                             </label>
                                         </li>
-                                        
+
                                         <li
                                             style={{
                                                 display: "flex",
@@ -464,7 +552,7 @@ function SelectedMonthData() {
                                             />
                                             <label
                                                 htmlFor="generatorPowerCheckbox"
-                                                style={{ color: "gray", marginLeft: "15px" }}
+                                                style={{ color: "black", marginLeft: "15px" }}
                                             >
                                                 Generator{" "}
                                             </label>
@@ -473,14 +561,100 @@ function SelectedMonthData() {
                                     </>
                                 )}
                             </ul>
-                        </div>
+                            <ul style={{ listStyleType: "none", padding: 0 }}>
+                                <li
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginBottom: "25px",
+                                    }}
+                                >
 
-                        <div className="col-10">
-                            <div className="card">
-                                <div className="card-body p-1 dgr-monthly-chart-container">
-                                    <canvas id="myChart"></canvas>
-                                </div>
-                            </div>
+                                    <input
+                                        type="checkbox"
+                                        id="loadCheckbox"
+                                        name="load"
+                                        checked={loadChecked}
+                                        onChange={handleLoadCheckboxChange}
+                                        style={{ marginRight: "10px" }}
+                                    />
+                                    <label
+                                        htmlFor="loadCheckbox"
+                                        style={{
+                                            color: "black",
+                                            marginLeft: "5px",
+                                            fontWeight: "700",
+                                        }}
+                                    >
+                                        Load
+                                    </label>
+                                </li>
+                                {loadChecked && (
+                                    <>
+                                        <li
+                                            style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                marginLeft: "40px",
+                                                marginBottom: "25px",
+                                            }}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id="coolingPowerCheckbox"
+                                                name="coolingPower"
+                                                checked={coolingPowerChecked}
+                                                onChange={e =>
+                                                    handleCheckboxChange(
+                                                        setCoolingPowerChecked,
+                                                        e.target.checked
+                                                    )
+                                                }
+                                                style={{ marginRight: "5px" }}
+                                            />
+                                            <label
+                                                htmlFor="coolingPowerCheckbox"
+                                                style={{ color: "black", marginLeft: "15px" }}
+                                            >
+                                                Cooling{" "}
+                                            </label>
+                                        </li>
+
+                                        <li
+                                            style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                marginLeft: "40px",
+                                                marginBottom: "25px",
+                                            }}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id="criticalPowerCheckbox"
+                                                name="criticalPower"
+                                                checked={criticalPowerChecked}
+                                                onChange={e =>
+                                                    handleCheckboxChange(
+                                                        setCriticalPowerChecked,
+                                                        e.target.checked
+                                                    )
+                                                }
+                                                style={{ marginRight: "5px" }}
+                                            />
+                                            <label
+                                                htmlFor="criticalPowerCheckbox"
+                                                style={{ color: "black", marginLeft: "15px" }}
+                                            >
+                                                Critical{" "}
+                                            </label>
+                                        </li>
+
+                                    </>
+                                )}
+                            </ul>
+                        </div>
+                        <div className="h-[50vh] shadow-xl rounded p-2 w-[100%]">
+                            <canvas id="myChart" ></canvas>
                         </div>
                     </div>
                 </div>
