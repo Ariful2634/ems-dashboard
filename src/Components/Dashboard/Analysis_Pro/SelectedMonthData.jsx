@@ -42,10 +42,17 @@ function SelectedMonthData() {
     const [generatorPowerChecked, setGeneratorPowerChecked] = useState(true);
     const [coolingPowerChecked, setCoolingPowerChecked] = useState(true);
     const [criticalPowerChecked, setCriticalPowerChecked] = useState(true);
+    const [coolingPowerChecked, setCoolingPowerChecked] = useState(true);
+    const [criticalPowerChecked, setCriticalPowerChecked] = useState(true);
 
     // Cost
     const [dpdcCostChecked, setDpdcCostChecked] = useState(true);
     const [generatorCostChecked, setGeneratorCostChecked] = useState(true);
+    const [criticalCostChecked, setCriticalCostChecked] = useState(true);
+    const [coolingCostChecked, setCoolingCostChecked] = useState(true);
+
+    // diesel
+    const [generatorFuelChecked, setGeneratorFuelChecked] = useState(true)
     const [criticalCostChecked, setCriticalCostChecked] = useState(true);
     const [coolingCostChecked, setCoolingCostChecked] = useState(true);
 
@@ -107,6 +114,8 @@ function SelectedMonthData() {
 
     console.log(data)
 
+    console.log(data)
+
     useEffect(() => {
         if (data) {
             const daysInMonth = new Date(+year, +month, 0).getDate();
@@ -136,6 +145,36 @@ function SelectedMonthData() {
                 if (generatorPowerChecked) {
                     newChartData.datasets.push({
                         label: "Generator Energy",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.generator_energy : 0;
+                        }),
+                        backgroundColor: "rgba(155, 199, 132, 0.8)",
+                    });
+                }
+                if (coolingPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Cooling Load Energy",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.heavy_energy : 0;
+                        }),
+                        backgroundColor: "rgba(220, 144, 64, 0.5)",
+                    });
+                }
+                if (criticalPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Critical Load Energy",
+                        data: labels.map(day => {
+                            const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
+                            return dataPoint ? dataPoint.light_energy : 0;
+                        }),
+                        backgroundColor: "rgba(245, 40, 145, 0.8)",
+                    });
+                }
+                if (coolingPowerChecked) {
+                    newChartData.datasets.push({
+                        label: "Heavy Energy",
                         data: labels.map(day => {
                             const dataPoint = data.find(item => new Date(item.date).getDate() === parseInt(day));
                             return dataPoint ? dataPoint.generator_energy : 0;
@@ -317,6 +356,12 @@ function SelectedMonthData() {
         dpdcPowerChecked,
         dpdcCostChecked,
         generatorPowerChecked,
+        generatorCostChecked,
+        criticalPowerChecked,
+        coolingPowerChecked,
+        criticalCostChecked,
+        coolingCostChecked,
+        generatorFuelChecked
         generatorCostChecked,
         criticalPowerChecked,
         coolingPowerChecked,
