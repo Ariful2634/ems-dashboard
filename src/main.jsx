@@ -10,8 +10,6 @@ import Root from './Components/Root/Root';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Home from './Components/Home/Home';
 import KnowledgeBase from './Components/Dashboard/KnowledgeBase';
-import Demo3 from './Components/Dashboard/Demo3';
-import Demo4 from './Components/Dashboard/Demo4';
 import AuthProvider from './Components/Logout/Provider/AuthProvider';
 import Register from './Components/Register/Register';
 import MembarApproval from './Components/Dashboard/MembarApproval';
@@ -89,14 +87,6 @@ const router = createBrowserRouter([
           {
             path:'knowledgeBase',
             element:<KnowledgeBase></KnowledgeBase>
-          },
-          {
-            path:'demo3',
-            element:<Demo3></Demo3>
-          },
-          {
-            path:'demo4',
-            element:<Demo4></Demo4>
           },
           {
             path:'membarApproval',

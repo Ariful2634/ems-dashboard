@@ -196,29 +196,6 @@ const Dashboard = () => {
                                         )}
                                     </div>
                                     <h2 className="border-b border-gray-600 w-full"></h2>
-                                    <NavLink
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "flex px-4 gap-3 items-center bg-[#2e5a88] text-white p-2 rounded-xl pr-4"
-                                                : "flex px-4 p-2 items-center mr-4 gap-3"
-                                        }
-                                        to="/dashboard/demo3"
-                                    >
-                                        <SiKnowledgebase />
-                                        Demo 3
-                                    </NavLink>
-                                    <h2 className="border-b border-gray-600 w-full"></h2>
-                                    <NavLink
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "flex px-4 gap-3 items-center bg-[#2e5a88] text-white p-2 rounded-xl pr-4"
-                                                : "flex px-4 p-2 items-center mr-4 gap-3"
-                                        }
-                                        to="/dashboard/demo4"
-                                    >
-                                        <SiKnowledgebase />
-                                        Demo 4
-                                    </NavLink>
                                 </ul>
                             </div>
                         </div>
